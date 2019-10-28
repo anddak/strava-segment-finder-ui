@@ -3,7 +3,7 @@ import L from 'leaflet';
 import './styles.css';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
-import {buildMap} from "./MapUtils";
+import {buildMap} from "./MapBuilder";
 
 export default function MapWrapper() {
 

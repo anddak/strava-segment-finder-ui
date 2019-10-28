@@ -1,6 +1,7 @@
 import L from "leaflet";
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
+import {getSegments} from './MapAjax.js';
 
 let myMap;
 let drawnItems;
@@ -45,6 +46,7 @@ class ChainableMap {
     drawControl = new L.Control.Draw({
       draw: {
         polyline: false,
+        circle: false,
         marker: false,
         circlemarker: false,
       },
@@ -90,15 +92,16 @@ class ChainableMap {
   /**
    * if blank map standard drawControl visible
    * if drawn, edit/delete only drawControl visible
+   * getSegments calls to get top 10 segments from backend via fetch API
    * @returns {ChainableMap}
    */
-  manageDrawControl() {
+  manageDraw() {
     myMap.on(L.Draw.Event.CREATED, function (e) {
       drawnItems.addLayer(e.layer);
       drawControl.remove(myMap);
       drawControlEditOnly.addTo(myMap);
       myMap.addLayer(e.layer);
-
+      getSegments(e.layer._bounds.getSouthWest(), e.layer._bounds.getNorthEast());
       });
 
     myMap.on(L.Draw.Event.DELETED, function(e) {
@@ -121,8 +124,9 @@ export function buildMap() {
     .createEditOnlyDrawControl()
     .addControl()
     .locateUser()
-    .manageDrawControl()
+    .manageDraw()
 }
 
 
-
+//TODO: integrate sonarqube
+//TODO: connect with backend to save coordinates
