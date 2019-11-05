@@ -1,12 +1,13 @@
 import L from "leaflet";
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
-import {getSegments} from './MapAjax.js';
+import {getSegments} from './MapFetch.js';
+import {removePolyLinesAndShapes} from "./MapUtils";
 
-let myMap;
-let drawnItems;
-let drawControl;
-let drawControlEditOnly;
+export let myMap;
+export let drawnItems;
+export let drawControl;
+export let drawControlEditOnly;
 
 class ChainableMap {
 
@@ -46,12 +47,15 @@ class ChainableMap {
     drawControl = new L.Control.Draw({
       draw: {
         polyline: false,
+        polygon: false,
         circle: false,
         marker: false,
         circlemarker: false,
       },
       edit: {
-        featureGroup: drawnItems
+        featureGroup: drawnItems,
+        edit: false,
+        delete: false
       }
     });
     return this;
@@ -64,9 +68,18 @@ class ChainableMap {
   createEditOnlyDrawControl() {
      drawControlEditOnly = new L.Control.Draw({
       edit: {
-        featureGroup: drawnItems
+        featureGroup: drawnItems,
+        edit: false,
+        delete: false
       },
-      draw: false
+       draw: {
+         polyline: false,
+         polygon: false,
+         circle: false,
+         marker: false,
+         circlemarker: false,
+       }
+      // draw: false
     });
     return this;
   }
@@ -91,26 +104,33 @@ class ChainableMap {
 
   /**
    * if blank map standard drawControl visible
-   * if drawn, edit/delete only drawControl visible
+   * if drawn, possible to draw, new draw would remove old polylines
    * getSegments calls to get top 10 segments from backend via fetch API
    * @returns {ChainableMap}
    */
   manageDraw() {
     myMap.on(L.Draw.Event.CREATED, function (e) {
+
+     removePolyLinesAndShapes();
+
       drawnItems.addLayer(e.layer);
       drawControl.remove(myMap);
       drawControlEditOnly.addTo(myMap);
-      myMap.addLayer(e.layer);
       getSegments(e.layer._bounds.getSouthWest(), e.layer._bounds.getNorthEast());
       });
 
+
+
     myMap.on(L.Draw.Event.DELETED, function(e) {
+
+      removePolyLinesAndShapes();
+
       if (drawnItems.getLayers().length === 0){
         drawControlEditOnly.remove(myMap);
         drawControl.addTo(myMap);
       }
     });
-
+  console.log(myMap);
     return this;
   }
 }
@@ -129,4 +149,4 @@ export function buildMap() {
 
 
 //TODO: integrate sonarqube
-//TODO: connect with backend to save coordinates
+
