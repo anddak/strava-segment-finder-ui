@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.6.1",
     "dotenv": "^8.1.0",
     "dotenv-webpack": "^1.7.0",
+    "fetch-suspense": "^1.2.0",
     "leaflet": "^1.5.1",
     "leaflet-draw": "^1.0.4",
     "mapbox-gl": "latest",
@@ -16,10 +18,11 @@
     "react-leaflet": "^2.5.0",
     "react-map-gl": "^5.0.12",
     "react-map-gl-draw": "^0.16.1",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "typeface-roboto": "0.0.75"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=13000 react-scripts start",
     "watch": "node scripts/watch.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

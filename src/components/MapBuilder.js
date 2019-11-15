@@ -119,8 +119,6 @@ class ChainableMap {
       getSegments(e.layer._bounds.getSouthWest(), e.layer._bounds.getNorthEast());
       });
 
-
-
     myMap.on(L.Draw.Event.DELETED, function(e) {
 
       removePolyLinesAndShapes();
@@ -130,7 +128,6 @@ class ChainableMap {
         drawControl.addTo(myMap);
       }
     });
-  console.log(myMap);
     return this;
   }
 }

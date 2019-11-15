@@ -1,17 +1,21 @@
 import L from "leaflet";
 import {myMap} from "./MapBuilder";
 
+export let segments;
+
 /**
- * renders to map all segments found in the param
+ * renders marker and polyline of all segments found in the param to map
  *
  * @param topSegments array of segment objects returned by the draw selection
  * based on strava's top segments API
  */
-export function renderSegmentPolylines(topSegments) {
+export function renderSegments(topSegments) {
 
   if (topSegments.length > 0) {
 
-    topSegments.forEach(s =>
+    topSegments.forEach(function (s) {
+
+      L.marker(s.start_latlng).addTo(myMap);
 
       L.polyline(
         L.Polyline.fromEncoded(s.points).getLatLngs(),
@@ -22,11 +26,14 @@ export function renderSegmentPolylines(topSegments) {
           opacity: .8,
           lineJoin: 'round',
           interactive: true,
-        }
-      ).addTo(myMap));
+        }).addTo(myMap);
+    });
+
+    segments = topSegments;
 
   }
 }
+
 
 /**
  *  helper function to remove all segment polylines and drawn shapes when

@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import {renderSegmentPolylines} from './MapUtils';
+import {renderSegments} from './MapUtils';
 import 'polyline-encoded';
 
 /**
@@ -19,9 +19,8 @@ export function getSegments(SWBounds, NEBounds) {
   })
     .then((resp) => resp.json())
     .then(data =>  {
-    console.log(JSON.stringify(data));
-    renderSegmentPolylines(data)
-  })
+    renderSegments(data);
+  });
 }
 
 
