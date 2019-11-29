@@ -9,7 +9,9 @@ export let drawnItems;
 export let drawControl;
 export let drawControlEditOnly;
 
+
 class ChainableMap {
+
 
   /**
    * Create map and set a default view
@@ -128,8 +130,10 @@ class ChainableMap {
         drawControl.addTo(myMap);
       }
     });
+
     return this;
   }
+
 }
 
 export function buildMap() {
@@ -143,6 +147,8 @@ export function buildMap() {
     .locateUser()
     .manageDraw()
 }
+
+
 
 
 //TODO: integrate sonarqube

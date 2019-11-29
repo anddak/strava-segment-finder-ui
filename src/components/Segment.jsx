@@ -17,8 +17,6 @@ export default function Segment({name, distance, elevationDifference, id, showDe
         showDetail(data);
       });
 
-
-
   };
 
   return (

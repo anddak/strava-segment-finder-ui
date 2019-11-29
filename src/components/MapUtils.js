@@ -2,6 +2,7 @@ import L from "leaflet";
 import {myMap} from "./MapBuilder";
 
 export let segments;
+let hg;
 
 /**
  * renders marker and polyline of all segments found in the param to map
@@ -32,6 +33,37 @@ export function renderSegments(topSegments) {
     segments = topSegments;
 
   }
+}
+
+/**
+ * leaflet graph for elevation
+ */
+// https://github.com/GIScience/Leaflet.Heightgraph
+export function renderElevationGraph(geojson) {
+
+  let options = {
+      width: 500,
+      height: 250,
+
+      margins: {
+        top: 10,
+        right: 30,
+        bottom: 55,
+        left: 50
+      }
+
+    };
+
+  hg = L.control.heightgraph(options);
+  hg.addTo(myMap);
+  hg.addData(geojson);
+  L.geoJson(geojson).addTo(myMap);
+
+}
+
+export function removeElevationGraph() {
+  myMap.removeControl(hg);
+
 }
 
 
