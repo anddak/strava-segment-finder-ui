@@ -2,7 +2,7 @@ import React from 'react';
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
-export default function Segment({name, distance, elevationDifference, id, showDetail}) {
+export default function UniqueSegment({name, distance, elevationDifference, id, showDetail}) {
 
   const handleClick = () => {
 

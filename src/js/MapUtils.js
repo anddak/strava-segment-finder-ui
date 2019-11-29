@@ -1,5 +1,6 @@
 import L from "leaflet";
 import {myMap} from "./MapBuilder";
+import 'leaflet.heightgraph/dist/L.Control.Heightgraph';
 
 export let segments;
 let hg;
@@ -78,4 +79,25 @@ export function removeElevationGraph() {
       myMap.removeLayer(myMap._layers[i]);
     }
   }
+}
+
+/**
+ *  decode polyline from google's encoded algorithm to coordinates
+ *  (because google's elevation API doesn't want to take the decoded polyline)
+ */
+export function decodePolyline(polyline) {
+  return L.Polyline.fromEncoded(polyline);
+}
+
+/**
+ * terrible hack to create the right url format for google's elevation API
+ * because when passing in the encoded polyline, google's API doesn't work
+ */
+export function generateEncodedPolylineParam(decodedPolyline) {
+
+  let formattedPolyline;
+  decodedPolyline.getLatLngs().map(s => formattedPolyline += `${s.lat},${s.lng}|`);
+  formattedPolyline = formattedPolyline.replace('undefined', '');
+  formattedPolyline = formattedPolyline.slice(0, -1);
+  return formattedPolyline;
 }

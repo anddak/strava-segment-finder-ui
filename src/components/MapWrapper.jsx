@@ -5,9 +5,9 @@ import './styles.css';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import Grid from '@material-ui/core/Grid'
-import SegmentsTable from "./SegmentsTable";
-import {buildMap} from "./MapBuilder";
-import {myMap} from "./MapBuilder";
+import SegmentsWrapper from "./SegmentsWrapper";
+import {buildMap} from "../js/MapBuilder";
+import {myMap} from "../js/MapBuilder";
 
 export default function MapWrapper() {
 
@@ -20,7 +20,7 @@ export default function MapWrapper() {
           <div id="leaflet-container"/>
         </Grid>
         <Grid item xs={4}>
-          <SegmentsTable test={myMap}/>
+          <SegmentsWrapper test={myMap}/>
         </Grid>
       </Grid>
     </div>
