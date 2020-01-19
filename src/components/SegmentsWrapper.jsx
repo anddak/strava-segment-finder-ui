@@ -5,6 +5,7 @@ import {segments} from "../js/MapUtils";
 import SegmentList from './SegmentList';
 import DetailedSegment from "./DetailedSegment";
 import {removeElevationGraph} from "../js/MapUtils";
+import Paper from '@material-ui/core/Paper';
 import {decodePolyline, generateEncodedPolylineParam} from "../js/MapUtils";
 import {fetchElevation} from "../js/MapFetch";
 
@@ -33,8 +34,9 @@ export default class SegmentsWrapper extends React.Component {
             decodePolyline(detail.map.polyline)));
       }
 
-    this.setState({showDetail: true});
     this.setState({segmentDetails: detail});
+    this.setState({showDetail: true});
+
   };
 
   hideDetail = () => {
@@ -46,14 +48,16 @@ export default class SegmentsWrapper extends React.Component {
     const {segments, showDetail, segmentDetails} = this.state;
     return (
       <div>
-        <Button onClick={this.handleSegmentFetch}>Fetch segments
+        <Button variant="contained" color="primary" onClick={this.handleSegmentFetch}>Fetch segments
         </Button>
 
         {showDetail ?
 
           (<DetailedSegment segmentDetails={segmentDetails} hideDetail={this.hideDetail}/>)
           :
-          (<SegmentList segmentList={segments} showDetail={this.showDetail} />)
+          ( <Paper>
+            <SegmentList segmentList={segments} showDetail={this.showDetail} />
+          </Paper> )
 
         }
       </div>

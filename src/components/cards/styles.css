@@ -1,0 +1,9 @@
+.no-attempts-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segment-profile-card {
+  margin-top: 1rem;
+}
