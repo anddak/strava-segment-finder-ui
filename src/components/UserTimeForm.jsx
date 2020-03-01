@@ -6,6 +6,8 @@ export default function UserTimeForm() {
 
   const [distance, setDistance] = useState(0);
 
+  //TODO: render this dinamically
+
   return(
     <div>
       <div>
